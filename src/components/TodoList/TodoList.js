@@ -6,33 +6,28 @@ class TodoList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            descInput: 'tae',
-            descOutput: ''
+            descInput: '',
+            descOutput: '',
+            todoList: []
         };
     }
 
     render() {
-        let items = [];
-        items = this.addTodo(items);
         return(
             <div className="TodoList">
                 <input type="text" value={this.state.descInput} onChange={this.handleChange}></input>
-                <button onClick={this.setDesc}>add</button>
-                {items}
-                {console.log(this.state.descOutput)}
+                <button onClick={this.addTodo}>add</button>
+                <ul>{this.state.todoList}</ul>
+                {console.log('output' + this.state.descOutput)}
             </div>
         );
     }
-
-    addTodo = (items) => {
-        if (this.state.descOutput !== '') {
-            items.push(<Todo description={this.state.descOutput}/>);
+    
+    addTodo = () => {
+        if (this.state.descInput !== '') {
+            this.setState({descOutput: this.state.descInput});
+            this.state.todoList.push(<Todo description={this.state.descOutput}/>);
         }
-        return items;
-    }
-
-    setDesc = () => {
-        this.setState({descOutput: this.state.descInput})
     }
 
     handleChange = (event) => {
